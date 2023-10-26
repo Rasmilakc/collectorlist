@@ -1,0 +1,54 @@
+package Test1;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class collectorlist {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		//program1(for the name more than 4 character)
+		List<String> names= Arrays.asList("mayuri","ram","satish","amol");
+		  List<String> longNames = names.stream().filter(name -> name.length() > 4)
+		  .collect(Collectors.toList());
+		  System.out.println(longNames);
+		  
+		//program2(for positive as deposit and negative as withdrawl)
+		  List<Integer> trans = Arrays.asList(11,22,34,-55,66,-77,-88,44,55);
+		  List<Integer> deposits = trans.stream().filter(t -> t > 0).collect(Collectors.toList());
+		  System.out.println(deposits);
+		  
+		  List<Integer> withdrawls = trans.stream().filter(t -> t < 0).collect(Collectors.toList());
+		  System.out.println(withdrawls);
+		  
+		  
+		  //program3(for ages and birth year)
+		  List<Integer> birthYear = Arrays.asList(1989,1990,1991,1992);
+		  List<Integer> ages=birthYear.stream().map(x->2023-x).collect(Collectors.toList());
+		  System.out.println(ages);
+		  
+		  //for table of two
+		  List<Integer> tables = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+		  List<Integer> twoTable = tables.stream().map(x -> x * 2).collect(Collectors.toList());
+		  System.out.println(twoTable);
+		  
+		  //program4
+		  List<Integer> numbers = Arrays.asList(1,2,3,4,5);
+		  int sum = numbers.stream().reduce(0,(x,y)->x+y);
+		  System.out.println(sum);
+		  
+//		  int [] nums = {11,22,33};
+//		  int total = 0;
+//		  for(int i = 0 ; i < nums.length ; i++) {
+//		   total = total + nums[i];
+//		  }
+//		  System.out.println(total);
+		  
+		  //program 5(adding welcome infront of name )
+		  List<String> na = Arrays.asList("mayuri","ram","satish","amol");
+		  na.stream().forEach(name -> System.out.println("welcome "+name));
+
+	}
+
+}
