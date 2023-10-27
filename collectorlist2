@@ -1,0 +1,88 @@
+package Test1;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class collectorlist2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		List<PersonB>people=new ArrayList<>();
+		people.add(new PersonB("chinmay","deshpande",23));
+		people.add(new PersonB("sarika","pansare",25));
+		people.add(new PersonB("mayuri","deshpande",21));
+		people.add(new PersonB("sumit","kanhe",43));
+		people.add(new PersonB("satish","rai",25));
+		people.add(new PersonB("mayuri","deshpande",12));
+		
+		
+		//program 1(filtering:Get people older than 30)
+		List<PersonB> above30 =people.stream().filter(x->x.getAge()>30).collect(Collectors.toList());
+		above30.forEach(x->System.out.println(x.displayName()));
+		
+		//program2(Filtering based on name :"Mayuri")
+		List<PersonB> filterOnnames =people.stream().filter(x->x.displayName().contains("mayuri")).collect(Collectors.toList());
+		filterOnnames.forEach(x->System.out.println(x.displayName()));
+		
+		//collecting only the names in one list(using map)
+		List<String>names =people.stream().map(x->x.FirstName).collect(Collectors.toList());
+		names.forEach(x->System.out.println(x));
+		
+		 List<Integer> ages = people.stream().map(x -> x.age).collect(Collectors.toList());
+		  int sum = ages.stream().reduce(0,(x,y)->x+y);
+		  System.out.println(sum/people.size());
+		  
+		  int avg = people.stream().map(x -> x.age)
+				  .collect(Collectors.toList())
+		  .stream().reduce(0,(x,y)->x+y)/people.size();
+		  
+		  
+		  // Sorting: People in ascending order by age
+	        List<PersonB> sortedByAge = people.stream()
+	                .sorted((p1, p2) -> Integer.compare(p1.getAge(), p2.getAge()))
+	                .collect(Collectors.toList());
+	        sortedByAge.forEach(person -> System.out.println(person.displayName() + " Age: " + person.getAge()));
+	        
+	        
+	        // Count the number of people with the same age
+	        Map<Integer, Long> ageCounts = people.stream()
+	                .collect(Collectors.groupingBy(PersonB::getAge, Collectors.counting()));
+	        ageCounts.forEach((age, count) -> System.out.println("Age " + age + " Count: " + count));
+	        
+	        
+	     // Name of the first 3 people where age > 30
+	        List<PersonB> firstThreeAbove30 = people.stream().filter(person -> person.getAge() > 30).limit(3).collect(Collectors.toList());
+	        firstThreeAbove30.forEach(x->System.out.println(x.displayName()));
+	        
+
+	        // Distinct Name List
+	        List<String> distinctNames = people.stream() .map(person -> person.displayName()) .distinct().collect(Collectors.toList());
+	        distinctNames.forEach(name -> System.out.println(name));
+
+
+		  
+		
+		
+
+	}
+
+}
+class PersonB{
+	String FirstName;
+	String LastName;
+	int age;
+	public PersonB(String Fn,String Ln,int ag) {
+		this.FirstName=Fn;
+		this.LastName=Ln;
+		this.age=ag;
+	}
+	public String displayName() {
+		return(this.FirstName+this.LastName);
+	}
+	
+	public int getAge() {
+		return this.age;
+	}
+}
